@@ -63,7 +63,7 @@ public class PacmanController : MonoBehaviour {
 
         Ray2D ray = CreateRay(direction);
         Debug.DrawRay(ray.origin, ray.direction, Color.cyan);
-        return !Physics2D.Raycast(ray.origin, ray.direction, ray.origin == (Vector2)transform.position ? .26F : .51F);
+        return !Physics2D.Raycast(ray.origin, ray.direction, ray.origin == (Vector2)transform.position ? .26F : .49F);
     }
 
     private Ray2D CreateRay(Direction dirOverride = Direction.NONE, bool doOriginShift = true)
@@ -80,16 +80,16 @@ public class PacmanController : MonoBehaviour {
             switch (direction)
             {
                 case Direction.UP:
-                    origin = (Vector2)transform.position + new Vector2(0F, -.24F);
+                    origin = (Vector2)transform.position + new Vector2(0F, -.22F);
                     break;
                 case Direction.DOWN:
-                    origin = (Vector2)transform.position + new Vector2(0F, .24F);
+                    origin = (Vector2)transform.position + new Vector2(0F, .22F);
                     break;
                 case Direction.LEFT:
-                    origin = (Vector2)transform.position + new Vector2(.24F, 0F);
+                    origin = (Vector2)transform.position + new Vector2(.22F, 0F);
                     break;
                 case Direction.RIGHT:
-                    origin = (Vector2)transform.position + new Vector2(-.24F, 0F);
+                    origin = (Vector2)transform.position + new Vector2(-.22F, 0F);
                     break;
                 default:
                     origin = transform.position;
@@ -117,6 +117,12 @@ public class PacmanController : MonoBehaviour {
         }
 
         return new Ray2D(origin, vecDir);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("dot") || collision.CompareTag("bigDot"))
+            Destroy(collision.gameObject);
     }
 
     public enum Direction
